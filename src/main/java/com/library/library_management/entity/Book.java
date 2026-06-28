@@ -34,9 +34,10 @@ public class Book {
     @Column(nullable = false)
     private Integer totalCopies;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "integer default 0")
     private Integer availableCopies;
 
-    private boolean active = true;
+    @Column(nullable = false)
+    private Boolean active ;
 
 }

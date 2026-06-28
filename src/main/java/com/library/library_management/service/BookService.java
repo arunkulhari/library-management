@@ -16,18 +16,29 @@ public class BookService {
     private final BookRepository bookRepository;
     // add book
     public Book addBook(Book book){
-        book.setAvailableCopies(book.getAvailableCopies());
+        // debug
+//        System.out.println("title "+ book.getTitle());
+//        System.out.println("Author: "+ book.getAuthor());
+//        System.out.println("TotalCopies "+ book.getTotalCopies());
+//        System.out.println("AvailableCopies before set: "+ book.getAvailableCopies());
+        // null check
+        if(book.getTotalCopies()==null){
+            throw new RuntimeException("Total copies cannot be null");
+        }
+        book.setAvailableCopies(book.getTotalCopies());
+        book.setActive(true);
+//        System.out.println("AvailableCopies after set: "+ book.getAvailableCopies());
         return bookRepository.save(book);
     }
     // get all book can also be used -->>  return bookRepository.findByActiveTrue;
     public List<Book> getAllBooks(){
         return bookRepository.findAll()
                 .stream()
-                .filter(book-> book.isActive())
+                .filter(book-> book.getActive())
                 .collect(Collectors.toList());
     }
     //get book by id
-    public Optional<Book> getBooksById(Long id){
+    public Optional<Book> getBookById(Long id){
         return bookRepository.findById(id);
     }
     //search by author
